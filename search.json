@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "Example Analysis.html",
+    "href": "Example Analysis.html",
+    "title": "Example Analysis",
+    "section": "",
+    "text": "Seatbelt images\n\n\n\nThe above image is downloaded from website https://www.sevenishlaw.com/blog/fewer-teenagers-wearing-seat-belts-increases-risks/\n\n\n(“Fewer Teenagers Wearing Seat Belts Increases Risks,” n.d.)\nMotor vehicle crashes has always been a leading cause of death throughout the world. It has been founded that wearing seat belts is a great way to prevent death or serious injury in a car crash. (“CDC Transportation Safety,” n.d.) In this analysis, I would love to further explore the effect of wearing seat belts on preventing drivers and passengers’ death.\nThe data set “UKDriverDeaths” is a built-in time series data set in R based on “Road Casualties in Great Britain 1969-84”. (“UKDriverDeaths:road Casualties in Great Britain 1969-84,” n.d.) It measures the monthly totals of car driver and passengers killed or seriously injured from January 1969 to December 1984. The question I am trying to answer is the effect of wearing set belts which was legislated on January 31st, 1983. Through my analysis, I want to emphasize the importance of wearing seat belts to drivers and passengers.\n\nUKDriverDeaths Data Dictionary\n\n\n\n\n\n\n\n\n\nVariable\nType\nMissing\nn\nDescription\n\n\n\n\nDriversKilled\nnum\n0\n192\ncar drivers killed\n\n\ndrivers\nnum\n0\n192\ndrivers\n\n\nfront\nnum\n0\n192\nfront-seat passengers killed or seriously injured\n\n\nrear\nnum\n0\n192\nrear-seat passengers killed or seriously injured\n\n\nkms\nnum\n0\n192\ndistance driven\n\n\nPetrolPrice\nnum\n0\n192\npetrol price\n\n\nVanKilled\nnum\n0\n192\nnumber of van (‘light goods vehicle’) drivers\n\n\nlaw\nnum\n0\n192\n0/1: was the law in effect that month?\n\n\n\n(“Table,” n.d.)\n\n\nThe link for the original UKDriverDeaths data: https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/UKDriverDeaths.html"
+  },
+  {
+    "objectID": "Example Analysis.html#data-analysis",
+    "href": "Example Analysis.html#data-analysis",
+    "title": "Example Analysis",
+    "section": "Data Analysis",
+    "text": "Data Analysis\n\n# | message: false\n# | echo: false\nlibrary(tidyverse)\n\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──\n✔ ggplot2 3.3.6     ✔ purrr   0.3.4\n✔ tibble  3.1.8     ✔ dplyr   1.0.9\n✔ tidyr   1.2.0     ✔ stringr 1.4.1\n✔ readr   2.1.2     ✔ forcats 0.5.2\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\n\nlibrary(reshape2)\n\n\nAttaching package: 'reshape2'\n\nThe following object is masked from 'package:tidyr':\n\n    smiths\n\n\n\n# call up \"Seatbelts\" time series data set\ndata(\"Seatbelts\")\n# convert \"Seatbelts\" time series to data frame\ndf = data.frame(as.matrix(Seatbelts), Date=time(Seatbelts))\n#\nslice_sample(df, n = 5)\n\n  DriversKilled drivers front rear   kms PetrolPrice VanKilled law     Date\n1           109    1510   829  506 19453  0.12448999        10   0 1981.583\n2           125    1407   671  300 13517  0.11175347        11   0 1976.167\n3           111    1520   866  429 12926  0.09808018        13   0 1970.417\n4           119    1461   750  329 15582  0.09038292         7   0 1979.250\n5           101    1395   643  373 14417  0.10964252        10   0 1976.250\n\n# subset data set\ndf$law = as.factor(df$law)\nsub1 = select(df,c(DriversKilled,law,front,rear,Date))\n# remove missing data\nsub1 = sub1 %>% drop_na(.)\n#group data set by before law and after law\n#summarize the max, min, mean, etc. by each group \nsub1 %>% \n  group_by(law) %>% \n  summarize(avg = mean(DriversKilled),\n            q1=quantile(DriversKilled,0.25), \n            q3 = quantile(DriversKilled,0.75),\n            minimum = min(DriversKilled), maximum = max(DriversKilled))\n\n# A tibble: 2 × 6\n  law     avg    q1    q3 minimum maximum\n  <fct> <dbl> <dbl> <dbl>   <dbl>   <dbl>\n1 0      126.   108   140      79     198\n2 1      100.    85   119      60     154"
+  },
+  {
+    "objectID": "Example Analysis.html#graphs",
+    "href": "Example Analysis.html#graphs",
+    "title": "Example Analysis",
+    "section": "Graphs",
+    "text": "Graphs\n\n# Scatterplot: Car Drivers Killed from 1969 to 1984\nggplot(sub1, aes(x=Date, y=DriversKilled, color=law)) + \n  geom_point() + theme_minimal() + \n  labs(title=\"Car Driver Killed\", subtitle = \"From 1969 to 1984\",\n       x=\"Date\",y=\"Drivers Killed\", \n       caption = \"Data source: Seatbelts\") +\n  scale_color_discrete(labels=c(\"Before Law\",\"After Law\"))\n\n\n\n# Box plot: Effects of Seatbelts on Drivers\nggplot(sub1, aes(x=law, y =DriversKilled, fill = law)) + \n  geom_boxplot() + theme_minimal() + \n  labs(title=\"Effects of Seatbelts on Drivers\", \n       subtitle = \"Car Drivers Mortality From 1969 to 1984\",\n       x = \"Before and After Law Introduced\",\n       y=\"Drivers Killed\", \n       caption = \"Data source: Seatbelts\") +\n  scale_fill_discrete(labels=c(\"Before Law\",\"After Law\"))\n\n\n\n# Bar plot: Effect of Seatbelts on Passengers\nsub2 = sub1 %>% \n  group_by(law) %>% \n  summarize(Front = sum(front),Rear = sum(rear))\nsub2melted = melt(sub2, id.var='law')\nggplot(sub2melted,aes(x=variable,y = value, fill=variable))+\n  geom_bar(stat=\"identity\",position=\"dodge\") + facet_wrap(~law) +\n  labs(title=\"Effect of Seatbelts on Passengers \", \n  subtitle = \"Car Passengers Mortality Comparison Before vs After Law\",\n        x = \"Position of Passengers\",\n       y=\"Passengers Killed\", \n       caption = \"Data source: Seatbelts\") + \n  scale_fill_discrete(name = \"Position\")"
+  },
+  {
+    "objectID": "Example Analysis.html#results-conclusions",
+    "href": "Example Analysis.html#results-conclusions",
+    "title": "Example Analysis",
+    "section": "Results & Conclusions",
+    "text": "Results & Conclusions\nFrom the statistical summary and plots above, I can conclude that the introduction of seat belt legislation reduces the death of drivers. The average death of drivers in car crashes before implementing the law is much lower than the average mortality of drivers after implementing the law. In addition to drivers, the death or incidence of serious injury of passengers, both front and rear, is reduced. Therefore, it is beneficial for both drivers and passengers to wear seat belts to protect themselves from severe car crashes.\n\n\n\n\n\n\nR Functions Used In Analysis\n\n\n\nThe dplyr functions used in the analysis include slice_sample(), select(), group_by(), summarize(), %>%. The tidyr function used in the analysis includes drop_na(). And the ggplot2 functions used in graphing includes geom_points(), geom_boxplot(), geom_bar()."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Yixuan Chen",
+    "section": "",
+    "text": "I’m a master’s student studying Biostatistics at Johns Hopkins Bloomberg School of Public Health. I’m particularly interested in machine learning and personalized medicine. In my spare time I enjoy kpop music and drama."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hi, I’m Yixuan Chen. I was born in Shanghai, China and came to the United States since high school. I went to the University of Virginia for my undergraduate where I earned my Bachelor of Arts degree in Biology and Statistics. Through my experience, I developed huge interests in medicine and healthcare. I worked as a medical assistant and supported the medical team in collating medical records and facilitating communications with patients. I participated in genomics research examining the genetic variation on cardiovascular disease. Currently, I am pursuing a Master of Biostatistics from the Johns Hopkins Bloomberg School of Public Health. My passion lies in machine learning and personalized medicine. With new skills from my Biostatistics degree, I will conduct research that benefits undeserved and marginalized communities."
+  }
+]
