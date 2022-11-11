@@ -1,0 +1,5 @@
+---
+title: "About"
+---
+
+Hi, I'm Yixuan Chen. I was born in Shanghai, China and came to the United States since high school. I went to the University of Virginia for my undergraduate where I earned my Bachelor of Arts degree in Biology and Statistics. Through my experience, I developed huge interests in medicine and healthcare. I worked as a medical assistant and supported the medical team in collating medical records and facilitating communications with patients. I participated in genomics research examining the genetic variation on cardiovascular disease. Currently, I am pursuing a Master of Biostatistics from the Johns Hopkins Bloomberg School of Public Health. My passion lies in machine learning and personalized medicine. With new skills from my Biostatistics degree, I will conduct research that benefits undeserved and marginalized communities.

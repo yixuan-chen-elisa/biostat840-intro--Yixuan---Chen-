@@ -1,0 +1,10 @@
+---
+title: "Yixuan Chen"
+about: 
+  template: jolla
+  image: home page.jpeg
+---
+
+Welcome!
+
+I'm a master's student studying Biostatistics at Johns Hopkins Bloomberg School of Public Health. I'm particularly interested in machine learning and personalized medicine. In my spare time I enjoy kpop music and drama.
