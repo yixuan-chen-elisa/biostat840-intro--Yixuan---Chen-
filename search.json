@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Yixuan Chen",
+    "section": "",
+    "text": "I’m a master’s student studying Biostatistics at Johns Hopkins Bloomberg School of Public Health. I’m particularly interested in machine learning and personalized medicine. In my spare time I enjoy kpop music and drama."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hi, I’m Yixuan Chen. I was born in Shanghai, China and came to the United States since high school. I went to the University of Virginia for my undergraduate where I earned my Bachelor of Arts degree in Biology and Statistics. Through my experience, I developed huge interests in medicine and healthcare. I worked as a medical assistant and supported the medical team in collating medical records and facilitating communications with patients. I participated in genomics research examining the genetic variation on cardiovascular disease. Currently, I am pursuing a Master of Biostatistics from the Johns Hopkins Bloomberg School of Public Health. My passion lies in machine learning and personalized medicine. With new skills from my Biostatistics degree, I will conduct research that benefits undeserved and marginalized communities."
+  },
+  {
     "objectID": "Example Analysis.html",
     "href": "Example Analysis.html",
     "title": "Example Analysis",
@@ -26,19 +40,5 @@
     "title": "Example Analysis",
     "section": "Results & Conclusions",
     "text": "Results & Conclusions\nFrom the statistical summary and plots above, I can conclude that the introduction of seat belt legislation reduces the death of drivers. The average death of drivers in car crashes before implementing the law is much lower than the average mortality of drivers after implementing the law. In addition to drivers, the death or incidence of serious injury of passengers, both front and rear, is reduced. Therefore, it is beneficial for both drivers and passengers to wear seat belts to protect themselves from severe car crashes.\n\n\n\n\n\n\nR Functions Used In Analysis\n\n\n\nThe dplyr functions used in the analysis include slice_sample(), select(), group_by(), summarize(), %>%. The tidyr function used in the analysis includes drop_na(). And the ggplot2 functions used in graphing includes geom_points(), geom_boxplot(), geom_bar()."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Yixuan Chen",
-    "section": "",
-    "text": "I’m a master’s student studying Biostatistics at Johns Hopkins Bloomberg School of Public Health. I’m particularly interested in machine learning and personalized medicine. In my spare time I enjoy kpop music and drama."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Hi, I’m Yixuan Chen. I was born in Shanghai, China and came to the United States since high school. I went to the University of Virginia for my undergraduate where I earned my Bachelor of Arts degree in Biology and Statistics. Through my experience, I developed huge interests in medicine and healthcare. I worked as a medical assistant and supported the medical team in collating medical records and facilitating communications with patients. I participated in genomics research examining the genetic variation on cardiovascular disease. Currently, I am pursuing a Master of Biostatistics from the Johns Hopkins Bloomberg School of Public Health. My passion lies in machine learning and personalized medicine. With new skills from my Biostatistics degree, I will conduct research that benefits undeserved and marginalized communities."
   }
 ]
